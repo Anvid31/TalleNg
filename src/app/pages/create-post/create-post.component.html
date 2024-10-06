@@ -1,0 +1,144 @@
+<nav class="bg-blue-600 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="#" class="text-white text-2xl font-bold"
+      >WorkShop - Deveplopment</a
+    >
+    <ul class="flex space-x-4">
+      <li><a routerLink="/" class="text-white hover:text-blue-200">Home</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <div class="flex">
+    <!-- Formulario -->
+    <div class="w-1/2 pr-4">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Form</h2>
+      <div class="w-full ">
+        <form
+          (ngSubmit)="onSubmit()"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <div>
+            <label
+              for="title"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >Title</label
+            >
+            <input
+              type="text"
+              id="title"
+              name="title"
+              [(ngModel)]="post.title"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="content"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >Content</label
+            >
+            <textarea
+              id="content"
+              name="content"
+              [(ngModel)]="post.content"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label
+              for="image"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >Url</label
+            >
+            <input
+              type="url"
+              id="image"
+              name="image"
+              [(ngModel)]="post.image"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div>
+            <label
+              for="category"
+              class="block text-gray-700 text-sm font-bold mb-2"
+              >Categories</label
+            >
+            <div class="flex">
+              <input
+                type="text"
+                id="category"
+                [(ngModel)]="newCategory"
+                name="category"
+                class="shadow appearance-none border rounded w-full py-2 px-3 pd-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            
+              <button
+                type="button"
+                (click)="addCategory()"
+                class="bg-purple-600 text-white px-4 py-2 rounded-r-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span
+              *ngFor="let category of post.categories; trackBy: trackByCategory"
+              class="bg-purple-700 text-xs px-2 py-1 rounded-full"
+            >
+              {{ category }}
+              <button (click)="removeCategory(category)" class="ml-1 text-xs">
+                &times;
+              </button>
+            </span>
+          </div>
+          <div class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Agregar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 order-1 lg:order-2">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-8"> Preview</h2>
+      <div class="bg-white shadow-md rounded-lg overflow-hidden sticky top-8">
+        <img
+          *ngIf="post.image; else noImage"
+          [src]="post.image"
+          [alt]="post.title"
+          class="w-full h-48 object-cover"
+        />
+        <ng-template #noImage>
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-400 text-lg">No image</span>
+          </div>
+        </ng-template>
+        <div class="p-6">
+          <h2 id="preview-title" class="text-2xl font-bold text-gray-800 mb-2">
+            {{ post.title || "Título ejemplo" }}
+          </h2>
+          <p id="preview-content" class="text-gray-600 mb-4">
+            {{ post.content || "Contenido de ejemplo" }}
+          </p>
+          <div id="preview-categories" class="flex flex-wrap gap-2">
+            <span
+              *ngFor="let category of post.categories; trackBy: trackByCategory"
+              class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full"
+              >{{ category }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
